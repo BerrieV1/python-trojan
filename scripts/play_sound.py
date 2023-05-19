@@ -7,7 +7,7 @@ from datetime import datetime
 
 class Play_sound(BaseModule):
     def run(self):
-        audio_file = os.path.dirname(__file__) + 'suprise.mp3'
+        audio_file = os.path.dirname(__file__) + '/suprise.mp3'
         playsound(audio_file)
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         with open("../sounds/logs.txt", "a") as sounds_file:
