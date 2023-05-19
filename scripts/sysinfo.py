@@ -64,7 +64,7 @@ class Sysinfo(BaseModule):
                         addresses.append(addr.address)
                 network_info[net] = addresses  # Het IP adres wordt toegewezen aan een dictionary met als key de
                 # netwerkinterface
-            return network_info
+        return network_info
 
     def run(self):
         sysinfo_dir = "../sysinfo"
