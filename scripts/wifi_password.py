@@ -15,7 +15,3 @@ class Wifi_password(BaseModule):
             if password_line:
                 password = password_line[0]
                 print(f"WiFi Name: {name}, Password: {password}")
-
-
-
-
