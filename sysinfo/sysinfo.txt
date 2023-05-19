@@ -1,5 +1,5 @@
 {'os': 'Windows', 'version': '10.0.22621', 'architecture': ('64bit', 'WindowsPE'), 'node': 'LAPTOP-QFMGDNUU', 'user': uname_result(system='Windows', node='LAPTOP-QFMGDNUU', release='10', version='10.0.22621', machine='AMD64'), 'machine': 'AMD64'}
-{'physical_cores': 14, 'logical_cores': 20, 'usage_per_cpu': [1.6, 0.0, 1.6, 0.0, 0.0, 18.8, 10.9, 3.1, 0.0, 9.7, 4.8, 0.0, 6.1, 3.1, 3.1, 0.0, 0.0, 15.6, 13.4, 0.0], 'usage_total': 4.5, 'freq': 2300.0}
+{'physical_cores': 14, 'logical_cores': 20, 'usage_per_cpu': [0.0, 0.0, 0.0, 3.1, 10.9, 0.0, 0.0, 7.8, 1.6, 0.0, 1.6, 0.0, 14.1, 9.7, 0.0, 23.8, 26.2, 19.0, 1.6, 0.0], 'usage_total': 4.4, 'freq': 2300.0}
 {'Ethernet': ['169.254.156.44']}
-{'total_memory': 15.675651550292969, 'available_memory': 3.0626907348632812, 'used_memory': 12.61294937133789}
-{'C:\\': {'device': 'C:\\', 'mountpoint': 'C:\\', 'filesystem_type': 'NTFS', 'total_size': 952.8281211853027, 'used_size': 828.425594329834, 'free_size': 124.40252685546875, 'percentage_used': 86.9}}
+{'total_memory': 15.675651550292969, 'available_memory': 3.039459228515625, 'used_memory': 12.636192321777344}
+{'C:\\': {'device': 'C:\\', 'mountpoint': 'C:\\', 'filesystem_type': 'NTFS', 'total_size': 952.8281211853027, 'used_size': 828.4575843811035, 'free_size': 124.37053680419922, 'percentage_used': 86.9}}
