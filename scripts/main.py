@@ -55,10 +55,13 @@ class Trojan:
     def push_git_repo(self):
         repo = Repo(self.local_dir)
         repo.git.add(".")
-        repo.git.commit("-m", "update trojan")
-        origin = repo.remote("origin")
-        origin.set_url(f"https://{self.username}:{self.access_token}@github.com/{self.username}/{self.repo}.git")
-        origin.push()
+        if repo.is_dirty() or repo.untracked_files:
+            repo.git.commit("-m", "update trojan")
+            origin = repo.remote("origin")
+            origin.set_url(f"https://{self.username}:{self.access_token}@github.com/{self.username}/{self.repo}.git")
+            origin.push()
+        else:
+            print("No changes to commit. Skipping push.")
 
     def run_module(self, module):
         module_class = getattr(module, module.__name__)
