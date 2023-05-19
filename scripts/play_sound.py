@@ -3,7 +3,7 @@ from basemodule import BaseModule
 from playsound import playsound
 
 
-class Playsound(BaseModule):
+class Play_sound(BaseModule):
     def run(self):
         playsound("../sounds/suprise.mp3")
 
