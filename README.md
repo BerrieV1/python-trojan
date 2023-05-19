@@ -1,0 +1,1 @@
+This project is for educational purposes only. I made this for a school project and not with bad intentions.
