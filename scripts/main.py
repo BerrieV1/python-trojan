@@ -14,13 +14,14 @@ load_dotenv()
 class Trojan:
     def __init__(self):
         self.local_dir = "C:/Users/bernd/OneDrive - AP Hogeschool Antwerpen/School 22-23 semester 2/Python " \
-                         "Developement/trojan"
+                         "Developement/python-trojan"
         self.username = "BerrieV1"
         self.access_token = os.getenv("PAT")
+        self.repo = "python-trojan"
 
     def run(self):
         while True:
-            self.check(self.username, "trojan-school-project", "config/config.txt")
+            self.check(self.username, self.repo, "config/config.txt")
             self.push_git_repo(self.local_dir)
             print("Done")
             time.sleep(120)
@@ -59,7 +60,7 @@ class Trojan:
         repo.git.add(".")
         repo.git.commit("-m", "update trojan")
         origin = repo.remote("origin")
-        origin.set_url(f"https://{self.username}:{self.access_token}@github.com/{self.username}/trojan-school-project"
+        origin.set_url(f"https://{self.username}:{self.access_token}@github.com/{self.username}/{self.repo}"
                        f".git")
         origin.push()
 
