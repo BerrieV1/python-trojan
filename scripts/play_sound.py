@@ -3,6 +3,7 @@ from basemodule import BaseModule
 from playsound import playsound
 from datetime import datetime
 
+
 class Play_sound(BaseModule):
     def run(self):
         playsound("../sounds/suprise.mp3")
