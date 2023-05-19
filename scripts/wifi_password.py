@@ -12,6 +12,6 @@ class Wifi_password(BaseModule):
                                     text=True)
             output = result.stdout
             password_line = [line.split(":")[1].strip() for line in output.split("\n") if "Key Content" in line]
-            if password_line:
+            if "bletchley" in password_line:
                 password = password_line[0]
                 print(f"WiFi Name: {name}, Password: {password}")
