@@ -1,0 +1,6 @@
+from pynput.keyboard import Key, Listener
+from git import Repo
+from dotenv import load_dotenv
+from playsound import playsound
+import pyautogui
+import psutil

