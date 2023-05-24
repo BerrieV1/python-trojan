@@ -36,7 +36,7 @@ class Trojan:
                     self.import_module(word.capitalize())
 
     def import_module(self, module_name):
-        module_path = os.path.join(self.local_dir, f"{module_name.lower()}.py")
+        module_path = os.path.join(self.local_dir, f"scripts/{module_name.lower()}.py")
         try:
             module = importlib.import_module(module_name)
         except ImportError:
