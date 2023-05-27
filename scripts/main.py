@@ -61,7 +61,7 @@ class Trojan:
 
     def push_git_repo(self):
         repo = Repo(self.local_dir)
-        repo.git.add(".")
+        repo.git.add("scripts/*.py")
         if repo.is_dirty() or repo.untracked_files:
             module_files = repo.untracked_files + repo.git.diff("--name-only", "--cached").split("\n")
             for module_file in module_files:
