@@ -8,10 +8,14 @@ Het project werkt via Github. Via Github worden dus commando's in een bestand (c
 
 ## Features
 
-Het programma heeft verschillende features. De belangrijkste zijn dat het programma aanstuurbaar is via Github, dat er meerdere modules beschikbaar zijn en dat nieuwe modules makkelijk toegevoegd kunnen worden.
+Het programma heeft verschillende features. De belangrijkste zijn dat het programma aanstuurbaar is via Github, dat er meerdere modules beschikbaar zijn en dat nieuwe modules makkelijk toegevoegd kunnen worden. Encryptie heb ik proberen toevoegen maar dit is uiteindelijk niet gelukt.
 
 ## Keuzes
 
 Binnen dit project heb ik ook regelmatig gebruik gemaakt van bepaalde libraries. De externe libraries die ik gebruikt heb zijn pynput voor de keylogger, playsound voor de play_sound module, pyautogui voor de screenshot module en psutil voor de sysinfo module.
 
 ## Moeilijkheden en problemen
+
+In het project heb ik logischerwijs ook enkel moeilijkheden gehad. Ik had bijvoorbeeld een probleem bij het werken met Github. Als eerste had ik een implementatie waarbij ik via requests de inhoud van de raw view van een script ging opvragen en deze dan in een nieuw bestandje plaatsen. Dit werkte en zo kon ik 1 enkel bestand binnenhalen, alleen werd het dan wel heel lastig om de repo terug te pushen met de resultaten.
+
+Ook heb ik last gehad met de encryptie van de modules. Ik heb hier de Fernet library voor gebruikt maar dit was helaas zonder resultaat.
